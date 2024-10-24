@@ -6,7 +6,12 @@
   <title>Document</title>
   <style>
     .item {
-      color: darkblue;
+      color: blue;
+      font-size: bold;
+    }
+
+    .selected {
+      background-color: yellow;
     }
   </style>
 </head>
@@ -23,6 +28,7 @@
     <input type="text" id="newFruit">
     <button onclick="appendFruit()">Agregar al final</button>
     <button onclick="prependFruit()">Agregar al principio</button>
+    <button onclick="addFruitBeforeSelected()">Agregar delante del seleccionado</button>
   </p>
   <script>
     const listFruit = document.querySelector('ul');
@@ -31,17 +37,43 @@
 
     const inputNewFruit = document.querySelector("#newFruit");
 
-    function appendFruit() {
+    function setFeaturesLi(li) {
+      li.classList.add('item');
+      li.setAttribute('ondblclick', 'this.remove()');
+      li.setAttribute('onclick', 'this.classList.toggle("selected")')
+    }
+
+    function createFruit() {
       const newLi = document.createElement('li');
       newLi.textContent = inputNewFruit.value;
-      listFruit.append(newLi);
+      setFeaturesLi(newLi);
+      return newLi;
+    }
+
+    function appendFruit() {
+      listFruit.append( createFruit() );
+      
     }
 
     function prependFruit() {
-      const newLi = document.createElement('li');
-      newLi.textContent = inputNewFruit.value;
-      listFruit.prepend(newLi);
+      listFruit.prepend( createFruit() );
     }
+
+    function initList() {
+      document.querySelectorAll('li').forEach(li => {
+        setFeaturesLi(li);
+      });
+    }
+
+    function addFruitBeforeSelected() {
+      const liSelected = document.querySelector('.selected');
+      
+      // if (liSelected) liSelected.before( createFruit() );
+      // else appendFruit();
+      listFruit.insertBefore( createFruit(), liSelected);
+    }
+
+    initList();
   </script>
 </body>
 </html>
