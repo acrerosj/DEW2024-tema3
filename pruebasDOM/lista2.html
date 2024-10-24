@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .item {
+      color: darkblue;
+    }
+  </style>
+</head>
+<body>
+  <ul>
+    <li>Manzanas</li>
+    <li>Peras</li>
+    <li class="item">Naranjas</li>
+    <li>Sandía</li>
+    <li>Kiwi</li>
+    <li>Plátano</li>
+  </ul>
+  <p>
+    <input type="text" id="newFruit">
+    <button onclick="appendFruit()">Agregar al final</button>
+    <button onclick="prependFruit()">Agregar al principio</button>
+  </p>
+  <script>
+    const listFruit = document.querySelector('ul');
+    console.log("Nodos: ", listFruit.childNodes);
+    console.log("Elementos: ", listFruit.children);
+
+    const inputNewFruit = document.querySelector("#newFruit");
+
+    function appendFruit() {
+      const newLi = document.createElement('li');
+      newLi.textContent = inputNewFruit.value;
+      listFruit.append(newLi);
+    }
+
+    function prependFruit() {
+      const newLi = document.createElement('li');
+      newLi.textContent = inputNewFruit.value;
+      listFruit.prepend(newLi);
+    }
+  </script>
+</body>
+</html>
