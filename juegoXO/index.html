@@ -37,13 +37,14 @@
       table.append(tr);
       checkRow(tr);
     }
+    checkAllColumns();
 
     function change(td) {
       console.log(td.textContent);
       td.textContent = td.textContent == "X" ? "O" : "X";
       checkRow(td.parentElement);
-      updateCount();
       checkAllColumns();
+      updateCount();
     }
 
     function updateCount() {
@@ -61,22 +62,30 @@
       if ( [...row.children].every(td => td.textContent == first) ) {
         console.log("todos iguales");
         row.remove();
+        checkAllColumns();
       }
     }
 
-    function checkColumn(idColumn) {
+    function checkColumn(idColumn, rowsDelete) {
       let cells = document.querySelectorAll(`td:nth-child(${idColumn})`);
       console.log(cells);
       let first = cells[0].textContent;
       if ([...cells].every(td => td.textContent == first) ) {
         console.log("todos son iguales");
-        cells.forEach(td => td.remove());
+        cells.forEach(td => rowsDelete.push(td));
       }
     }
 
     function checkAllColumns() {
+      let nColums = table.children[0].children.length;
+      rowsDelete = [];
       for (let i = 1; i <= nColums; i++) {
-        checkColumn(i);
+        checkColumn(i, rowsDelete);
+      }
+      let anyToDelete = rowsDelete.length;
+      rowsDelete.forEach(td => td.remove());
+      if (anyToDelete) {
+        [...table.children].forEach(tr => checkRow(tr));
       }
     }
   </script>
