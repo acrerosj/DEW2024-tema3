@@ -20,7 +20,7 @@
   <p>El numero de Xs es <span id="xs">--</span> y el número de Os es <span id="os">--</span></p>
   <button onclick="updateCount()">Actualizar</button>
   <script>
-    const nRows = 7;
+    const nRows = 5;
     const nColums = 5;
     const table = document.querySelector('table');
     const spanX = document.querySelector('#xs');
@@ -43,6 +43,7 @@
       td.textContent = td.textContent == "X" ? "O" : "X";
       checkRow(td.parentElement);
       updateCount();
+      checkAllColumns();
     }
 
     function updateCount() {
@@ -63,6 +64,21 @@
       }
     }
 
+    function checkColumn(idColumn) {
+      let cells = document.querySelectorAll(`td:nth-child(${idColumn})`);
+      console.log(cells);
+      let first = cells[0].textContent;
+      if ([...cells].every(td => td.textContent == first) ) {
+        console.log("todos son iguales");
+        cells.forEach(td => td.remove());
+      }
+    }
+
+    function checkAllColumns() {
+      for (let i = 1; i <= nColums; i++) {
+        checkColumn(i);
+      }
+    }
   </script>
 </body>
 </html>
